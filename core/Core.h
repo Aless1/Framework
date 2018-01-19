@@ -6,7 +6,19 @@
 
 #include <unordered_map>>
 
+namespace tcore {
+ICore * g_core = NULL;
+
 class Core : public ICore {
+public:
+    virtual char * getParam(const char * name);
+    virtual bool StartTcpServer();
+    virtual bool StartTcpSession();
+
+public:
+    bool parse(int argc, char * argv[]);
+
+
 public:
     static Net * getNetInstance() {
         return Net::getInstance();
@@ -25,16 +37,13 @@ public:
     }
 
     static getInstance() {
-        if(s_self == NULL) {
-            s_self = new Core();;
+        if(g_core == NULL) {
+            g_core = new Core();;
         }        
-        return s_core;
+        return g_core;
     }
-
-public:
-    bool parse(int argc, char * argv[]);
-    virtual const char * getParam(const char * name);
 
 private:
     std::unordered_map<const char *, const char *> _param_args;
 };
+}

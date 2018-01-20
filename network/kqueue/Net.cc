@@ -37,7 +37,7 @@ public bool Net::destory() {
     return true;
 }
 
-public bool Net::StartTcpServer(const char * ip, int port, ITcpServer) {
+public bool Net::StartTcpServer(const char * ip, int port, ITcpServer * server) {
     int sock = socket(PF_INET, SOCK_STREAM, 0);
 
     struct sockaddr_in addr;
@@ -51,15 +51,12 @@ public bool Net::StartTcpServer(const char * ip, int port, ITcpServer) {
         std::cerr << "listen() failed:" << errno << std::endl;
         return -1;
     }
-
-    Accept * ac = new Accept(sock);
-    struct event e;
-    e.type = EVENT_TYPE.ACCEPT;
-    e.ac = ac;
+    
+    Associat * associat = Associat::CreateAccept(server);
 
     struct kevent event;
-    EV_SET($event, sock, EVFILT_READ, EV_ADD, 0, 0, e);
-    ret = kevent(kq, &event, 1, NULL, 0, NULL);
+    EV_SET($event, sock, EVFILT_READ, EV_ADD, 0, 0, associat);
+    int ret = kevent(kq, &event, 1, NULL, 0, NULL);
     if (ret == -1)
         std::err << "kevent register";
     if (event.flags & EV_ERROR)
@@ -71,28 +68,30 @@ private void Net::HandleEvent(struct kevent* events, int nevents) {
     for (int i = 0; i < nevents; i++) {
         int sock = events[i].ident;
         int data = events[i].data;
-        struct event  * e = (struct event  *)events[i].udata;
+        Associat * associat = (Associat *)events[i].udata;
 
-        if (EVENT_TYPE.ACCEPT == event->type) {
-            for(int j = 0; j < data; j++) {
-            Accept * ac = event->ac;
-            int client = accept(ac->socket, NULL, NULL);
-            
-            Pipe * p = new Pipe(client);
-            struct event e;
-            e.type = EVENT_TYPE.PIPE;
-            e.pipe = p;
-
-            struct kevent event;
-            EV_SET($event, client, EVFILT_READ, EV_ADD, 0, 0, e);
-            if (ret == -1)
-                std::err << "kevent register";
-            if (event.flags & EV_ERROR)
-                std::err << "Event error:" << strerror(event.data);
+        switch(associat->type) {
+        case EVENT_TYPE.ACCEPT:
+            Accept * ac = associat->ac;
+            for(int k = 0; k < data; k++) {
+                int client = accept(ac->socket, NULL, NULL);
+                Associat * associat = Associat::CreatePipe(ac->server->OnMallocSession());
+                EV_SET($event, client, EVFILT_READ, EV_ADD, 0, 0, associat);
+                int ret = kevent(kq, &event, 1, NULL, 0, NULL);
+                if (ret == -1)
+                    std::err << "kevent register";
+                if (event.flags & EV_ERROR)
+                    std::err << "Event error:" << strerror(event.data);
+                }
             }
-        } else if(EVENT_TYPE.PIPE == event->type) {
-            Pipe * p = event->pipe;
+            break;
+        case EVENT_TYPE.IO:
+            Pipe * p = associat->pipe;
             int bytes = recv(sock, buf_, availBytes, 0);
+            break;
+        default:
+            break;
+        }
         }
     }
 }

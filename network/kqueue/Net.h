@@ -1,25 +1,14 @@
 #ifndef __CORE_KQUEUE_NET_
 #define __CORE_KQUEUE_NET_
-#include "ICmd.h"
+
+#include "ICM.h"
+#include "Header.h"
 #include "Accept.h"
 #include "Pipe.h"
 
 using namespace tcore;
 
-enum EVENT_TYPE {
-    PIPE,
-    ACCEPT,
-}
-
-struct event {
-    int type;
-    union {
-        Accept * ac;
-        Pipe * pipe;
-    }
-};
-
-class Net : public ICmd{
+class Net : public ICM{
 public:
     virtual bool init();
     virtual bool update();

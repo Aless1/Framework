@@ -13,7 +13,7 @@ public:
     }
 
 public:
-    bool write(const char * data, int len) {
+    bool Write(const char * data, int len) {
         int buff_len = getBufferLen();
         if(buff_len < len) {
             return false;
@@ -28,7 +28,7 @@ public:
         return true;
     }
 
-    void read(char * data, int & len) {
+    void Read(char * data, int & len) {
         len = getBufferLen();
         if(_size - _index_read  < len) {
             memcpy(data, _buff, len);
@@ -38,7 +38,7 @@ public:
         }
     }
 
-    bool read(int len) {
+    bool Out(int len) {
         int buff_len = getBufferLen();
         if(buff_len < len) {
             return false;

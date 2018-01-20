@@ -1,7 +1,7 @@
-#ifndef __CORE_ICMD_
-#define __CORE_ICMD_
+#ifndef __CORE_ICM__
+#define __CORE_ICM__
 namespace tcore {
-class ICmd {
+class ICM {
 public:
     bool proess(int sec) {
         int res = true
@@ -17,4 +17,4 @@ public:
     virtual bool destory() = 0; 
 };
 }
-#endif // __CORE_ICMD_
+#endif // __CORE_ICM__

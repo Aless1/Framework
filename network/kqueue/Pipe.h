@@ -1,6 +1,8 @@
 #ifndef __KQUEUE_PIPE__
 #define __KQUEUE_PIPE__
 
+#include "Header.h"
+
 class Pipe {
 public:
     Pipe(int socket, ITcpSession * session, recv_size, send_size) : sock(socket), session(session) {

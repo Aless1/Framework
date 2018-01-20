@@ -1,6 +1,7 @@
 #ifndef __KQUEUE_ACCEPT__
 #define __KQUEUE_ACCEPT__
 
+#include "Header.h"
 #include "CirBuffer.h"
 
 class Accept {

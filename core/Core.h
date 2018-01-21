@@ -1,49 +1,26 @@
 #include "ICore.h"
-#include "Net.h"
-#include "Timer.h"
-#include "Logic.h"
-#include "Db.h"
+#include "INet.h"
 
-#include <unordered_map>>
+#include <unordered_map>
 
 namespace tcore {
-ICore * g_core = NULL;
-
 class Core : public ICore {
 public:
-    virtual char * getParam(const char * name);
-    virtual bool StartTcpServer();
-    virtual bool StartTcpSession();
-
-public:
-    bool parse(int argc, char * argv[]);
-
-
-public:
-    static Net * getNetInstance() {
-        return Net::getInstance();
-    }
-
-    static Db * getDbInstance() {
-        return Db::getInstance();
-    }
-
-    static Timer * getTimerInstance() {
-        return Timer::getInstance();
-    }
+    virtual const char * GetParam(const char * name);
     
-    static Logic * getLogicInstance() {
-        return Logic::getInstance();
-    }
+    // INet
+    virtual bool StartTcpServer(const char * host, int port, ITcpServer * server);
+    virtual bool StartTcpSession(const char * host, int port, ITcpSession * session);
 
-    static getInstance() {
-        if(g_core == NULL) {
-            g_core = new Core();;
-        }        
-        return g_core;
-    }
+public:
+    bool Parse(int argc, char * argv[]);
 
 private:
     std::unordered_map<const char *, const char *> _param_args;
 };
+    
+inline ICore * GetCoreInstance() {
+    static ICore * s_core = new Core();
+    return s_core;
+}
 }

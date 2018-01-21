@@ -43,6 +43,17 @@ public:
         chunk->parent->used++;
         return t;
     }
+    
+    template<typename... Args>
+    T * Create(Args... args) {
+        if(!_head) {
+            alloc_chunklist(1);
+        }
+        T * t = new (_head->buff)T(args...);
+        remove_chunk(_head);
+        chunk->parent->used++;
+        return t;
+    }
 
     void Recover(T * t) {
         t->~T();

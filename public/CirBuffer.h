@@ -9,7 +9,7 @@ public:
     }
 
     ~CirBuffer() {
-        delete[] _data;
+        delete[] _buff;
     }
 
 public:
@@ -62,7 +62,7 @@ private:
     int _size;
     int _index_write;
     int _index_read;
-}
+};
 
 }
 #endif // __TOOLS_CIRBUFFER__

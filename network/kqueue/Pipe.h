@@ -1,13 +1,14 @@
 #ifndef __KQUEUE_PIPE__
 #define __KQUEUE_PIPE__
 
-#include "Header.h"
+#include "ICore.h"
 
+namespace tcore {
 class Pipe {
 public:
-    Pipe(int socket, ITcpSession * session, recv_size, send_size) : sock(socket), session(session) {
-        _recv_buff = new Tools::CirBuffer(recv_size);
-        _send_buff = new Tools::CirBuffer(send_size);
+    Pipe(int socket, ITcpSession * session, int recv_size, int send_size) : sock(socket), session(session) {
+        recv_buff = new Tools::CirBuffer(recv_size);
+        send_buff = new Tools::CirBuffer(send_size);
     }
 
 public:
@@ -15,6 +16,7 @@ public:
     Tools::CirBuffer * send_buff;
     int sock;
     ITcpSession * session;
+};
 }
 
 #endif // __KQEUEUE_PIPE__

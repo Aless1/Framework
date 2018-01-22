@@ -17,7 +17,7 @@
 
 namespace tcore {
 
-class Net : public INet, public ICM {
+class Net : public INet {
 public:
     virtual bool Init();
     virtual bool Update();

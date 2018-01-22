@@ -8,8 +8,9 @@ public:
     virtual int OnRecv(void * data, int len) {
         char str[100];
         memset(str, 0, 100);
-        memccpy(str, data, 1, len);
+        memcpy(str, data, len);
         std::cout << str << std::endl;
+        std::cout << len << std::endl;
         return len;
     }
     virtual void OnConnected() {

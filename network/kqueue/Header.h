@@ -61,13 +61,22 @@ public:
         
         return associat;
     }
+
+    static Associat * CreatePipe(int socket, ITcpSession * session) {
+        Pipe * pipe = new Pipe(socket, session, 1024, 1024);
+        Associat * associat = new Associat();
+        associat->type = SO_IO;
+        associat->pipe = pipe;
+
+        return associat;  
+    }
 private:
     Associat() {}
     ~Associat() {
         if(SO_ACCEPT == type) {
-
-        } else if (SO_CONNECT == type) {
-            
+            delete this->ac;
+        } else if (SO_CONNECT == type || SO_IO == type) {
+            delete this->pipe;
         }
     }
 public:

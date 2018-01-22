@@ -19,9 +19,8 @@ bool Net::Update() {
             std::cerr << "kevent failed!\n";
             continue;
         }
-        
         for (int i = 0; i < ret; i++) {
-            HandleEvent(events[ret]);
+            HandleEvent(events[i]);
         }
     }
     return true;
@@ -36,11 +35,12 @@ bool Net::StartTcpServer(const char * ip, int port, ITcpServer * server) {
     struct kevent event;
     EV_SET(&event, associat->ac->sock, EVFILT_READ, EV_ADD, 0, 0, (void *)associat);
     int ret = kevent(_kq, &event, 1, NULL, 0, NULL);
-//    if (ret == -1)
-//        std::err << "kevent register";
-//    if (event.flags & EV_ERROR)
-//        std::err << "Event error:" << strerror(event.data);
-//    }
+    if (ret == -1) {
+        std::cout << "kevent register";
+    }
+    if (event.flags & EV_ERROR) {
+        std::cout << "Event error:" << strerror(event.data);
+    }
     return true;
 }
 
@@ -52,33 +52,40 @@ void Net::HandleEvent(struct kevent & e) {
         int sock = e.ident;
         int data = e.data;
         Associat * associat = (Associat *)e.udata;
-    
+
         switch(associat->type) {
         case SO_ACCEPT:
         {
             Accept * ac = associat->ac;
-//            for(int k = 0; k < data; k++) {
-//                int client = accept(ac->socket, NULL, NULL);
-//                Associat * associat = Associat::CreatePipe(ac->server->OnMallocSession());
-//                EV_SET($event, client, EVFILT_READ, EV_ADD, 0, 0, associat);
-//                int ret = kevent(kq, &event, 1, NULL, 0, NULL);
-//                if (ret == -1)
-//                    std::err << "kevent register";
-//                if (event.flags & EV_ERROR)
-//                    std::err << "Event error:" << strerror(event.data);
-//                }
-//            }
+            for(int i = 0; i < data; i++) {
+                int client = accept(ac->sock, NULL, NULL);
+                Associat * associat = Associat::CreatePipe(client, ac->server->OnMallocSession());
+                struct kevent event;
+                EV_SET(&event, client, EVFILT_READ, EV_ADD, 0, 0, (void *)associat);
+                int ret = kevent(_kq, &event, 1, NULL, 0, NULL);
+                if (ret == -1) {
+                    std::cerr << "kevent register";
+                }
+                if (event.flags & EV_ERROR) {
+                    std::cerr << "Event error:" << strerror(event.data);
+                }
+                associat->pipe->session->OnConnected();
+            }
             break;
         }
         case SO_CONNECT:
-        {
+        {               
             break;
-        }
-                
+        }                
         case SO_IO:
         {
             Pipe * p = associat->pipe;
-            //int bytes = recv(sock, buf_, availBytes, 0);
+            char data[1024];
+            int len = recv(sock, data, sizeof(data), 0);
+            p->recv_buff->Write(data, len);
+            p->recv_buff->Read(data, len);
+            len = p->session->OnRecv(data, len);
+            p->recv_buff->Out(len);
             break;
         }
         default:

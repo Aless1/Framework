@@ -1,15 +1,17 @@
 #ifndef __CORE_ICM__
 #define __CORE_ICM__
 
+#include "Daily.h"
+
 namespace tcore {
 class ICM {
 public:
     bool Proess(int sec) {
         int res = true;
-        //int64 tick = Tools::getCurrentTime();
-        //while(Tools::getCurrentTime() - tick > sec) {
-        res &= Update();
-        //}
+        long long tick = Tools::getCurrentTime();
+        while(res && Tools::getCurrentTime() - tick < sec) {
+            res &= Update();
+        }
         return res;
     }
 

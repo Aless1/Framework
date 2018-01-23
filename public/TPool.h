@@ -1,5 +1,5 @@
-#ifndef __TOOL_TPOOL__
-#define __TOOL_TPOOL__
+#ifndef __TOOLS_TPOOL__
+#define __TOOLS_TPOOL__
 
 namespace Tools {
 template <typename T, int chunks_count = 1, int chunks_size = 64>

@@ -27,6 +27,7 @@ set (INTERFACE
 set (PUBLIC
     ${PROJECT_SOURCE_DIR}/public/CirBuffer.h
     ${PROJECT_SOURCE_DIR}/public/TPool.h
+    ${PROJECT_SOURCE_DIR}/public/Daily.h
 )
 
 set (CORE

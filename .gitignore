@@ -1,3 +1,5 @@
 bin
 build
 *.swp
+sublime
+.DS_Store

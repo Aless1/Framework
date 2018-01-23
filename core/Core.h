@@ -18,9 +18,4 @@ public:
 private:
     std::unordered_map<const char *, const char *> _param_args;
 };
-    
-inline ICore * GetCoreInstance() {
-    static ICore * s_core = new Core();
-    return s_core;
-}
 }

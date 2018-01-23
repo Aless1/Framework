@@ -33,11 +33,6 @@ private:
     int _kq;
 };
     
-INet * GetNetInstance() {
-    static INet * s_net = new Net();
-    return s_net;
-}
-    
 }
 #endif //__CORE_KQUEUE_NET_
 

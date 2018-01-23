@@ -2,6 +2,11 @@
 
 using namespace tcore;
 
+ICore * tcore::GetCoreInstance() {
+    static ICore * s_core = new Core();
+    return s_core;
+}
+
 const char * Core::GetParam(const char * name) {
     return _param_args[name];
 }

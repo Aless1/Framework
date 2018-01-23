@@ -4,6 +4,11 @@ using namespace tcore;
 
 #define MAX_EVENT_COUNT 100
 
+INet * tcore::GetNetInstance() {
+    static INet * s_net = new Net();
+    return s_net;
+}
+
 bool Net::Init() {
     _kq = kqueue();
     return true;

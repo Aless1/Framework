@@ -1,11 +1,9 @@
 #ifndef __CORE_KQUEUE_NET_
 #define __CORE_KQUEUE_NET_
 
-#include "INet.h"
-
 #include "Header.h"
 
-namespace tcore {
+using namespace tcore;
 
 class Net : public INet {
 public:
@@ -22,7 +20,5 @@ private:
 private:
     int _kq;
 };
-    
-}
 #endif //__CORE_KQUEUE_NET_
 

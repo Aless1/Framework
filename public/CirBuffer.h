@@ -1,6 +1,8 @@
 #ifndef __TOOLS_CIRBUFFER__
 #define __TOOLS_CIRBUFFER__
 
+#include<string.h>
+
 namespace Tools {
 class CirBuffer {
 public:

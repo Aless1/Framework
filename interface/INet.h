@@ -4,8 +4,35 @@
 #include "ICM.h"
 
 namespace tcore {
-class ITcpServer;
-class ITcpSession;
+    class IPipe {
+    public:
+        virtual void send(void * data, int len) = 0;
+        virtual void close() = 0;
+    };
+    
+    class ITcpSession;
+    
+    class ITcpServer {
+    public:
+        virtual ITcpSession * OnMallocSession() = 0;
+    };
+    
+    class ITcpSession {
+    public:
+        virtual int OnRecv(void * data, int len) = 0;
+        virtual void OnConnected() = 0;
+        virtual void OnDisConnect() = 0;
+        
+    public:
+        void Send(void * data, int len) {
+            _pipe->send(data, len);
+        }
+        void Close() {
+            _pipe->close();
+        }
+    private:
+        IPipe * _pipe;
+    };
 
 class INet : public ICM{
 public:

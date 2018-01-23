@@ -3,23 +3,7 @@
 
 #include "INet.h"
 
-namespace tcore {
-    
-class ITcpServer {
-public:
-    virtual ITcpSession * OnMallocSession() = 0;
-};
-
-class ITcpSession {
-public:
-    virtual int OnRecv(void * data, int len) = 0;
-    virtual void OnConnected() = 0;
-    virtual void OnDisConnect() = 0;
-    
-public:
-    void Send(void * data, int len);
-};
-    
+namespace tcore {    
 class ICore {
 public:
     virtual const char * GetParam(const char * name) = 0;

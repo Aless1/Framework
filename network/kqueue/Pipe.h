@@ -10,6 +10,11 @@ public:
         recv_buff = new Tools::CirBuffer(recv_size);
         send_buff = new Tools::CirBuffer(send_size);
     }
+    
+    ~Pipe() {
+        delete recv_buff;
+        delete send_buff;
+    }
 
 public:
     Tools::CirBuffer * recv_buff;

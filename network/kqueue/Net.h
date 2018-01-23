@@ -1,16 +1,6 @@
 #ifndef __CORE_KQUEUE_NET_
 #define __CORE_KQUEUE_NET_
 
-#include <iostream>
-#include <string>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/event.h>
-#include <sys/time.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <errno.h>
-
 #include "INet.h"
 
 #include "Header.h"

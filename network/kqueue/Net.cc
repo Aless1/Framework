@@ -87,10 +87,25 @@ void Net::HandleEvent(struct kevent & e) {
             Pipe * p = associat->pipe;
             char data[1024];
             int len = recv(sock, data, sizeof(data), 0);
+            if(len == 0) {
+                p->session->OnDisConnect();
+                EV_SET(&e, sock, EVFILT_READ, EV_DELETE, 0, 0, NULL);
+                delete associat;
+                return;
+            }
+
             p->recv_buff->Write(data, len);
             p->recv_buff->Read(data, len);
-            len = p->session->OnRecv(data, len);
-            p->recv_buff->Out(len);
+
+            int use = 0;
+            char * point = data;
+            do {
+                use = p->session->OnRecv(point, len);
+                p->recv_buff->Out(use);
+
+                point = point + use;
+                len = len - use;
+            } while (use > 0 && len > 0);
             break;
         }
         default:

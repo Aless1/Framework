@@ -1,6 +1,17 @@
 #ifndef __CORE_KQUEUE_HEADER__
 #define __CORE_KQUEUE_HEADER__
 
+#include <iostream>
+#include <string>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/event.h>
+#include <sys/time.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <errno.h>
+#include <unistd.h>
+
 #include "Accept.h"
 #include "Pipe.h"
 
@@ -26,8 +37,8 @@ public:
         if (!(sock = socket(PF_INET, SOCK_STREAM, 0))
             || bind(sock, (struct sockaddr*)&addr, sizeof(struct sockaddr)) == -1
             || listen(sock, 5) == -1) {
-//            std::cerr << "listen() failed:" << errno << std::endl;
-//            return -1;
+            std::cerr << "listen() failed:" << errno << std::endl;
+            return NULL;
         }
         
         Accept * ac = new Accept(sock, server);
@@ -49,8 +60,8 @@ public:
         if (!(sock = socket(PF_INET, SOCK_STREAM, 0))
             || bind(sock, (struct sockaddr*)&addr, sizeof(struct sockaddr)) == -1
             || listen(sock, 5) == -1) {
-            //            std::cerr << "listen() failed:" << errno << std::endl;
-            //            return -1;
+            std::cerr << "listen() failed:" << errno << std::endl;
+            return NULL;
         }
         
         Pipe * pipe = new Pipe(sock, session, 1024, 1024);
@@ -70,12 +81,16 @@ public:
 
         return associat;  
     }
+
 private:
     Associat() {}
+public:
     ~Associat() {
         if(SO_ACCEPT == type) {
+            close(this->ac->sock);
             delete this->ac;
         } else if (SO_CONNECT == type || SO_IO == type) {
+            close(this->pipe->sock);
             delete this->pipe;
         }
     }

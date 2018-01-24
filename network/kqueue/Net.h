@@ -16,9 +16,6 @@ public:
     
 private:
     void HandleEvent(struct kevent & e);
-    
-private:
-    int _kq;
 };
 #endif //__CORE_KQUEUE_NET_
 

@@ -4,6 +4,8 @@ using namespace tcore;
 
 #define MAX_EVENT_COUNT 100
 
+int _kq = 0;
+
 INet * tcore::GetNetInstance() {
     static INet * s_net = new Net();
     return s_net;

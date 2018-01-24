@@ -13,4 +13,6 @@
 
 #include "INet.h"
 
+extern int _kq;
+
 #endif // __CORE_KQUEUE_HEADER__

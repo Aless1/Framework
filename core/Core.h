@@ -3,7 +3,8 @@
 
 #include <unordered_map>
 
-namespace tcore {
+using namespace tcore;
+
 class Core : public ICore {
 public:
     virtual const char * GetParam(const char * name);
@@ -18,4 +19,3 @@ public:
 private:
     std::unordered_map<const char *, const char *> _param_args;
 };
-}

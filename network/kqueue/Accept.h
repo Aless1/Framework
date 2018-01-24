@@ -27,10 +27,11 @@ public:
     ~Accept() {}
     
 public:
-    void close() {
-        ::close(sock);
-        delete this;
-    }
+    void close();
+    //  {
+    //     ::close(sock);
+    //     delete this;
+    // }
     
 public:
     int sock;

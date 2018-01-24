@@ -38,14 +38,8 @@ public:
     }
 
 public:
-    virtual void send(void * data, int len) {
-        
-    }
-    
-    virtual void close() {
-        ::close(sock);
-        delete this;
-    }
+    virtual void send(void * data, int len);
+    virtual void close();
 
 public:
     Tools::CirBuffer * recv_buff;

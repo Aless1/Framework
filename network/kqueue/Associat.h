@@ -13,43 +13,46 @@ enum {
 class Associat {
 public:
     static Associat * CreateAccept(const char * ip, int port, ITcpServer * server) {
-        Accept * ac = new Accept(ip, port, server);
-        
         Associat * associat = new Associat();
+        Accept * ac = new Accept(associat, server, ip, port);
         associat->type = SO_ACCEPT;
         associat->ac = ac;
         return associat;
     }
 
     static Associat * CreatePipe(const char * ip, int port, ITcpSession * session) {
-        Pipe * pipe = new Pipe(ip, port, session, 1024, 1024);
-
         Associat * associat = new Associat();
+        Pipe * pipe = new Pipe(associat, session, ip, port, 1024, 1024);
         associat->type = SO_CONNECT;
         associat->pipe = pipe;
+
+        session->SetPipe(pipe);
         
         return associat;
     }
 
     static Associat * CreatePipe(int socket, ITcpSession * session) {
-        Pipe * pipe = new Pipe(socket, session, 1024, 1024);
         Associat * associat = new Associat();
+        Pipe * pipe = new Pipe(associat, session, socket, 1024, 1024);
         associat->type = SO_IO;
         associat->pipe = pipe;
+
+        session->SetPipe(pipe);
 
         return associat;  
     }
 
-private:
-    Associat() {}
-public:
     ~Associat() {
         if(SO_ACCEPT == type) {
-            this->ac->close();
+            delete this->ac;
         } else if (SO_CONNECT == type || SO_IO == type) {
-            this->pipe->close();
+            delete this->pipe;
         }
     }
+
+private:
+    Associat() {}
+
 public:
     int type;
     union {

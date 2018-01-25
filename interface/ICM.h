@@ -1,5 +1,5 @@
-#ifndef __CORE_ICM__
-#define __CORE_ICM__
+#ifndef __FRAMEWROK_ICM__
+#define __FRAMEWROK_ICM__
 
 #include "Daily.h"
 
@@ -20,4 +20,4 @@ public:
     virtual bool Destory() = 0;
 };
 }
-#endif // __CORE_ICM__
+#endif // __FRAMEWROK_ICM__

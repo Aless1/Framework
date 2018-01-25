@@ -10,14 +10,18 @@ public:
         memset(str, 0, 100);
         memcpy(str, data, len);
         std::cout << str << std::endl;
-        std::cout << len << std::endl;
+
+        Send(str, len);
         return len;
     }
     virtual void OnConnected() {
         std::cout << "OnConnected" << std::endl;
+        char * str = "hhhhh\n";
+        Send(str, 6);
     }
     virtual void OnDisConnect() {
         std::cout << "OnDisConnect" << std::endl;
+        char * str = "bbbbb\n";
     }
 };
 

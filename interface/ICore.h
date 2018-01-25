@@ -1,14 +1,14 @@
-#ifndef __FRAMEWORK_ICORE__
-#define __FRAMEWORK_ICORE__
+#ifndef __CORE_ICORE__
+#define __CORE_ICORE__
 
-#include "INet.h"
+#include "ITcpHeader.h"
 
-namespace tcore {    
+namespace tcore {
+
 class ICore {
 public:
     virtual const char * GetParam(const char * name) = 0;
     
-    // INet
     virtual bool StartTcpServer(const char * host, int port, ITcpServer * server) = 0;
     virtual bool StartTcpSession(const char * host, int port, ITcpSession * session) = 0;
 };

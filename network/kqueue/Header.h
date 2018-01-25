@@ -1,18 +1,14 @@
-#ifndef __CORE_KQUEUE_HEADER__
-#define __CORE_KQUEUE_HEADER__
+#ifndef __FRAMEWROK_KQUEUE_HEADER__
+#define __FRAMEWROK_KQUEUE_HEADER__
 
 #include <iostream>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <sys/event.h>
-#include <sys/time.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <errno.h>
 #include <unistd.h>
 
 #include "INet.h"
+#include "CirBuffer.h"
 
-extern int _kq;
+extern int g_kqueue;
 
-#endif // __CORE_KQUEUE_HEADER__
+#endif // __FRAMEWROK_KQUEUE_HEADER__

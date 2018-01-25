@@ -22,6 +22,7 @@ set (INTERFACE
     ${PROJECT_SOURCE_DIR}/interface/ICM.h
     ${PROJECT_SOURCE_DIR}/interface/ICore.h
     ${PROJECT_SOURCE_DIR}/interface/INet.h
+    ${PROJECT_SOURCE_DIR}/interface/ITcpHeader.h
 )
 
 set (PUBLIC

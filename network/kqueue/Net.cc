@@ -2,8 +2,6 @@
 
 using namespace tcore;
 
-#define MAX_EVENT_COUNT 100
-
 int g_kqueue = 0;
 
 INet * tcore::GetNetInstance() {
@@ -17,10 +15,10 @@ bool Net::Init() {
 }
 
 bool Net::Update() {
-    struct kevent events[MAX_EVENT_COUNT];
+    struct kevent events[KQUEUE_MAX_EV_COUNT];
     while (true)
     {
-        int ret = kevent(g_kqueue, NULL, 0, events, MAX_EVENT_COUNT, NULL);
+        int ret = kevent(g_kqueue, NULL, 0, events, KQUEUE_MAX_EV_COUNT, NULL);
         if (ret == -1)
         {
             std::cerr << "kevent failed!\n";
@@ -86,9 +84,9 @@ void Net::HandleEvent(struct kevent & e) {
     case SO_IO:
     {
         Pipe * p = associat->pipe;
-        char data[1024];
+        char data[RECV_TEMP_LEN];
         if(EVFILT_READ == e.filter) {
-            int len = recv(sock, data, sizeof(data), 0);
+            int len = recv(sock, data, RECV_TEMP_LEN, 0);
             if(len == 0) {
                 p->close();
                 return;

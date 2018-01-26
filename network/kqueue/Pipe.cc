@@ -9,12 +9,25 @@ Pipe::Pipe(Associat * associat, ITcpSession * session, const char * ip, int port
     addr.sin_port = htons(port);
     
     if (!(socket = ::socket(PF_INET, SOCK_STREAM, 0))
-        || bind(socket, (struct sockaddr*)&addr, sizeof(struct sockaddr)) == -1
-        || listen(socket, 5) == -1) {
+        || SOCK_ERROR == SetReuse(socket)
+        || SOCK_ERROR == SetTcpNodelay(socket)
+        || SOCK_ERROR == SetNonblocking(socket)) {
         std::cerr << "listen() failed:" << errno << std::endl;
         return;
     }
     sock = socket;
+    
+    int ret = connect(socket, (sockaddr *)&addr, sizeof(struct sockaddr));
+    
+    if (NO_ERROR == ret) {
+        std::cout << "connect success" << std::endl;
+    } else if (ret < 0 && errno != EINPROGRESS) {
+        std::cerr << "connect err" << std::endl;
+        return;
+    } else {
+        std::cout << "connect delay" << std::endl;
+        associat->type = SO_CONNECT;
+    }
     
     recv_buff = new Tools::CirBuffer(recv_size);
     send_buff = new Tools::CirBuffer(send_size);

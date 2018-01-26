@@ -9,8 +9,11 @@ Accept::Accept(Associat * associat, ITcpServer * server, const char * ip, int po
     addr.sin_port = htons(port);
     
     if (!(socket = ::socket(PF_INET, SOCK_STREAM, 0))
-        || bind(socket, (struct sockaddr*)&addr, sizeof(struct sockaddr)) == -1
-        || listen(socket, 5) == -1) {
+        || SOCK_ERROR == SetReuse(socket)
+        || SOCK_ERROR == SetTcpNodelay(socket)
+        || SOCK_ERROR == SetNonblocking(socket)
+        || SOCK_ERROR == bind(socket, (struct sockaddr*)&addr, sizeof(struct sockaddr))
+        || SOCK_ERROR == listen(socket, 5)) {
         std::cerr << "listen() failed:" << errno << std::endl;
         return;
     }

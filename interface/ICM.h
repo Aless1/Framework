@@ -2,6 +2,7 @@
 #define __FRAMEWROK_ICM__
 
 #include "Daily.h"
+#include <iostream>
 
 namespace tcore {
 class ICM {

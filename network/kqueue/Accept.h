@@ -5,17 +5,21 @@
 
 using namespace tcore;
 
-class Associat;
 class Accept {
 public:
-    Accept(Associat * associat, ITcpServer * server, const char * ip, int port);
+    Accept(ITcpServer * server, int socket, int recv_size, int send_size);
     ~Accept();
-
-    void close();
+public:
+    static Accept * Create(ITcpServer * server, const char * ip, int port, int recv_size, int send_size);
+    void Close();
+    
 public:
     int sock;
 
-    Associat * associat;
+    int recv_size;
+    int send_size;
+
+    struct Associat associat;
     ITcpServer * server;
 };
 

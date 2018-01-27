@@ -1,7 +1,8 @@
 #ifndef __CORE_KQUEUE_NET_
 #define __CORE_KQUEUE_NET_
 
-#include "Associat.h"
+#include "Pipe.h"
+#include "Accept.h"
 
 using namespace tcore;
 
@@ -11,8 +12,8 @@ public:
     virtual bool Update();
     virtual bool Destory();
     
-    virtual bool StartTcpServer(const char * host, int port, ITcpServer * server);
-    virtual bool StartTcpSession(const char * host, int port, ITcpSession * session);
+    virtual bool StartTcpServer(const char * ip, int port, ITcpServer * server, int recv_size, int send_size);
+    virtual bool StartTcpSession(const char * ip, int port, ITcpSession * session, int recv_size, int send_size);
     
 private:
     void HandleEvent(struct kevent & e);

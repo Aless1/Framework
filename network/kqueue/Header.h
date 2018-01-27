@@ -15,10 +15,29 @@
 #define KQUEUE_MAX_EV_COUNT 512
 #define RECV_TEMP_LEN 4096
 
+#define INVALID_FD -1
 #define SOCK_ERROR -1
 #define NO_ERROR 0
 
 extern int g_kqueue;
+
+enum {
+    SO_ACCEPT,
+    SO_CONNECT,
+    SO_IO,
+};
+
+class Accept;
+class Pipe;
+
+struct Associat
+{
+    int type;
+    union {
+        Accept * ac;
+        Pipe * pipe;
+    };
+};
 
 static int SetNonblocking(int sockfd) {
     return fcntl(sockfd, F_SETFL, fcntl(sockfd, F_GETFD, 0) | O_NONBLOCK);
@@ -56,6 +75,33 @@ static int SetStackSize(const int size) {
     if (setrlimit(RLIMIT_STACK, &rt) == -1)
         return -1;
     return 0;
+}
+
+static int CreateSocket() {
+    int socket = INVALID_FD;
+    if(!(socket =  ::socket(PF_INET, SOCK_STREAM, 0))
+        || SOCK_ERROR == SetReuse(socket)
+        || SOCK_ERROR == SetTcpNodelay(socket)
+        || SOCK_ERROR == SetNonblocking(socket)) {
+        std::cout << "CreateSocket err" << std::endl;
+        return INVALID_FD;
+    }
+    return socket;
+}
+
+static bool SetEventState(int fd, int type, int state, void * udata) {
+    struct kevent event;
+    EV_SET(&event, fd, type, state, 0, 0, udata);
+    int ret = kevent(g_kqueue, &event, 1, NULL, 0, NULL);
+    if (ret == -1) {
+        std::cout << "kevent register";
+        return false;
+    }
+    if (event.flags & EV_ERROR) {
+        std::cout << "Event error:" << strerror(event.data);
+        return false;
+    }
+    return true;
 }
 
 #endif // __FRAMEWROK_KQUEUE_HEADER__

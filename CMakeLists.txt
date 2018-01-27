@@ -45,7 +45,6 @@ set (NET
     ${PROJECT_SOURCE_DIR}/network/kqueue/Accept.cc
     ${PROJECT_SOURCE_DIR}/network/kqueue/Pipe.h
     ${PROJECT_SOURCE_DIR}/network/kqueue/Pipe.cc
-    ${PROJECT_SOURCE_DIR}/network/kqueue/Associat.h
 )
 
 

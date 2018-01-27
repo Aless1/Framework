@@ -4,8 +4,8 @@ namespace tcore {
 class ITcpSession;
 class IPipe {
 public:
-    virtual void send(char * data, int len) = 0;
-    virtual void close() = 0;
+    virtual void Send(void * data, int len) = 0;
+    virtual void Close() = 0;
 
     virtual ~IPipe() {};
 };
@@ -22,11 +22,11 @@ public:
     virtual void OnDisConnect() = 0;
     
 public:
-    void Send(char * data, int len) {
-        _pipe->send(data, len);
+    void Send(void * data, int len) {
+        _pipe->Send(data, len);
     }
     void Close() {
-        _pipe->close();
+        _pipe->Close();
     }
 
     void SetPipe(IPipe * pipe) {

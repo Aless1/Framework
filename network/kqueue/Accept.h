@@ -14,13 +14,13 @@ public:
     void Close();
     
 public:
+    ITcpServer * server;
     int sock;
 
     int recv_size;
     int send_size;
 
     struct Associat associat;
-    ITcpServer * server;
 };
 
 #endif // __KQEUEUE_ACCEPT__

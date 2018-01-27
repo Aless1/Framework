@@ -5,7 +5,7 @@
 
 using namespace tcore;
 
-class Associat;
+struct Associat;
 class Pipe : public IPipe {
 public:
     Pipe(ITcpSession * session, int socket, int state, int recv_size, int send_size);
@@ -20,12 +20,12 @@ public:
     virtual void Close();
 
 public:
-    Tools::CirBuffer * recv_buff;
-    Tools::CirBuffer * send_buff;
+    ITcpSession * session;
     int sock;
 
     struct Associat associat;
-    ITcpSession * session;
+    Tools::CirBuffer * recv_buff;
+    Tools::CirBuffer * send_buff;
 };
 
 #endif // __KQEUEUE_PIPE__

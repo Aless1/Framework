@@ -11,12 +11,14 @@ INet * tcore::GetNetInstance() {
 
 bool Net::Init() {
     g_kqueue = kqueue();
+    _tick.tv_sec = 0;
+    _tick.tv_nsec = 5000;
     return true;
 }
 
 bool Net::Update() {
     struct kevent events[KQUEUE_MAX_EV_COUNT];
-    int ret = kevent(g_kqueue, NULL, 0, events, KQUEUE_MAX_EV_COUNT, NULL);
+    int ret = kevent(g_kqueue, NULL, 0, events, KQUEUE_MAX_EV_COUNT, &_tick);
     if (ret == -1)
     {
         std::cerr << "kevent failed!\n";
@@ -89,7 +91,9 @@ void Net::HandleEvent(struct kevent & e) {
         Pipe * p = associat->pipe;
         associat->type = SO_IO;
         SetEventState(p->sock, EVFILT_READ, EV_ADD, (void *)&p->associat);
-        SetEventState(p->sock, EVFILT_READ, EV_ADD, (void *)&p->associat);
+        SetEventState(p->sock, EVFILT_WRITE, EV_DISABLE, (void *)&p->associat);
+        
+        p->session->OnConnected();
         break;
     }                
     case SO_IO:

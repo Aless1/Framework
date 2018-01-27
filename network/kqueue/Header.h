@@ -53,29 +53,29 @@ static int SetReuse(const int fd) {
     return setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (const char*)&val, sizeof(val));
 }
 
-static int SetSockSendBuff(int sock, int size) {
-    return setsockopt(sock, SOL_SOCKET, SO_SNDBUF, (const char*)&size, sizeof(size));
-}
-
-static int SetSockRecvBuff(int sock, int size) {
-    return setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (const char*)&size, sizeof(size));
-}
-
-static int SetMaxOpenFile(const int size) {
-    struct rlimit rt;
-    rt.rlim_max = rt.rlim_cur = size;
-    if (setrlimit(RLIMIT_NOFILE, &rt) == -1)
-        return -1;
-    return 0;
-}
-
-static int SetStackSize(const int size) {
-    struct rlimit rt;
-    rt.rlim_max = rt.rlim_cur = size * 1024;
-    if (setrlimit(RLIMIT_STACK, &rt) == -1)
-        return -1;
-    return 0;
-}
+//static int SetSockSendBuff(int sock, int size) {
+//    return setsockopt(sock, SOL_SOCKET, SO_SNDBUF, (const char*)&size, sizeof(size));
+//}
+//
+//static int SetSockRecvBuff(int sock, int size) {
+//    return setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (const char*)&size, sizeof(size));
+//}
+//
+//static int SetMaxOpenFile(const int size) {
+//    struct rlimit rt;
+//    rt.rlim_max = rt.rlim_cur = size;
+//    if (setrlimit(RLIMIT_NOFILE, &rt) == -1)
+//        return -1;
+//    return 0;
+//}
+//
+//static int SetStackSize(const int size) {
+//    struct rlimit rt;
+//    rt.rlim_max = rt.rlim_cur = size * 1024;
+//    if (setrlimit(RLIMIT_STACK, &rt) == -1)
+//        return -1;
+//    return 0;
+//}
 
 static int CreateSocket() {
     int socket = INVALID_FD;

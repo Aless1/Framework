@@ -17,6 +17,9 @@ public:
     
 private:
     void HandleEvent(struct kevent & e);
+    
+private:
+    struct timespec _tick;
 };
 #endif //__CORE_KQUEUE_NET_
 

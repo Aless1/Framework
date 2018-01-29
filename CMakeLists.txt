@@ -63,3 +63,5 @@ add_executable(Framework
     ${NET}
     ${CORE}
 )
+
+add_subdirectory(module)

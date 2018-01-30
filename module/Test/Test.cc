@@ -3,17 +3,17 @@
 
 using namespace std;
 
-bool Init() {
+bool Test::Init() {
     cout << "Test Init" << endl;
     return true;
 }
 
-bool Launch() {
+bool Test::Launch() {
     cout << "Test Launch" << endl;
     return true;
 }
 
-bool Destory() {
+bool Test::Destory() {
     cout << "Test Destory" << endl;
     return true;
 }

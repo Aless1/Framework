@@ -4,9 +4,9 @@
 namespace tcore {
 class IModule {
 public:
-    bool Init() = 0;
-    bool Launch() = 0;
-    bool Destory() = 0;
+    virtual bool Init() = 0;
+    virtual bool Launch() = 0;
+    virtual bool Destory() = 0;
 
 public:
     IModule * next;
@@ -14,14 +14,14 @@ public:
 }
 
 #define GET_MDOULE \
-static IModule * s_module = NULL; \
+static tcore::IModule * s_module = NULL; \
 extern 'c' static GetMaudle() { \
     return s_module; \
 }
 
 #define ADD_MDOULE(module) \
 class module##factory { \
-    IModule * m = new module(); \
+    tcore::IModule * m = new module(); \
     m=>next = s_moudle; \
     s_moudle = m; \
 } \

@@ -1,12 +1,15 @@
 #ifndef __MODULE_ITEST__
 #define __MODULE_ITEST__
 
-#include "IModule.h"
+#include "ICore.h"
 
-class Test : public tcore::IModule {
-pubic:
-    bool Init() = 0;
-    bool Launch() = 0;
-    bool Destory() = 0;   
+class ITest : public tcore::IModule {
+public:
+    virtual bool Init() = 0;
+    virtual bool Launch() = 0;
+    virtual bool Destory() = 0;
+
+    virtual ~ITest() {}
 };
+
 #endif // __MOUDLE_ITEST__

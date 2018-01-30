@@ -1,6 +1,7 @@
 #ifndef __CORE_ICORE__
 #define __CORE_ICORE__
 
+#include "IModule.h"
 #include "ITcpHeader.h"
 
 namespace tcore {

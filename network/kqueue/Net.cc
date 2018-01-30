@@ -9,7 +9,7 @@ INet * tcore::GetNetInstance() {
     return s_net;
 }
 
-bool Net::Init() {
+bool Net::Launch() {
     g_kqueue = kqueue();
     _tick.tv_sec = 0;
     _tick.tv_nsec = 5000;
@@ -30,7 +30,7 @@ bool Net::Update() {
     return true;
 }
 
-bool Net::Destory() {
+bool Net::Shutdown() {
     return true;
 }
 

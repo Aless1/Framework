@@ -15,6 +15,7 @@ ENDIF()
 
 set (EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
 set (LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
+set (BUILD_SHARED_LIBS On)
 
 SET(CMAKE_CXX_FLAGS "-g -std=c++11")
 
@@ -47,21 +48,40 @@ set (NET
     ${PROJECT_SOURCE_DIR}/network/kqueue/Pipe.cc
 )
 
+set (LOGIC
+    ${PROJECT_SOURCE_DIR}/logic//Logic.h
+    ${PROJECT_SOURCE_DIR}/logic//Logic.cc
+)
 
 INCLUDE_DIRECTORIES(
     "${PROJECT_SOURCE_DIR}/public"
-    "${PROJECT_SOURCE_DIR}/interface")
+    "${PROJECT_SOURCE_DIR}/interface"
+    "${PROJECT_SOURCE_DIR}/third_party/include"
+)
+
+set (THIRD_PARTY_INCLUDE
+    "${PROJECT_SOURCE_DIR}/third_party/include"
+)
+
+set (THIRD_PARTY_LIB
+    "${PROJECT_SOURCE_DIR}/third_party/yaml-cpp/libyaml-cpp.0.6.0.dylib"
+)
+
 
 SOURCE_GROUP(interface FILES ${INTERFACE})
 SOURCE_GROUP(public FILES ${PUBLIC})
 SOURCE_GROUP(core FILES ${CORE})
 SOURCE_GROUP(net FILES ${NET})
+SOURCE_GROUP(logic FILES ${LOGIC})
 
-add_executable(Framework 
+add_executable(Framework
     ${INTERFACE}
     ${PUBLIC}
     ${NET}
     ${CORE}
+    ${LOGIC}
 )
+
+target_link_libraries(Framework ${THIRD_PARTY_INCLUDE} ${THIRD_PARTY_LIB})
 
 add_subdirectory(module)

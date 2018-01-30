@@ -3,11 +3,11 @@
 
 #include "ITest.h"
 
-class Test : public tcore::IModule {
+class Test : public ITest {
 public:
-    bool Init();
-    bool Launch();
-    bool Destory();
+    virtual bool Init();
+    virtual bool Launch();
+    virtual bool Destory();   
 };
 
 #endif // __MODULE_TEST__

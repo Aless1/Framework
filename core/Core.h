@@ -5,6 +5,7 @@
 
 #include "ICore.h"
 #include "INet.h"
+#include "ILogic.h"
 
 using namespace tcore;
 

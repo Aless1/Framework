@@ -9,6 +9,7 @@ public:
     virtual bool Destory() = 0;
 public:
     IModule * next;
+    const char * name;
 };
 }
 
@@ -31,6 +32,7 @@ class module##Factory { \
 public: \
     module##Factory() { \
         tcore::IModule * m = new module(); \
+        m->name = #module; \
         m->next = s_module; \
         s_module = m; \
     } \

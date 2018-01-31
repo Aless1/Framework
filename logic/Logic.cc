@@ -29,6 +29,8 @@ bool Logic::Launch() {
     char path[128];
     sprintf(path, "node/%s/module.yaml", node);
     YAML::Node config = YAML::LoadFile(path)["module"];
+
+    MODULE_MAP::iterator iter;
     for (int i = 0; i < config.size(); i++) {
         std::string name;
         config[0] >> name;
@@ -47,12 +49,18 @@ bool Logic::Launch() {
         }
 
         IModule * module = getModule(g_core);
-        _module_map[name] = module;
-
-        module->Init();
+        while(module) {
+            iter = _module_map.find(module->name);
+            if(iter != _module_map.end()) {
+                continue;
+            }
+            _module_map[module->name] = module;
+            module->Init();
+            module = module->next;
+        }
     }
-
-    MODULE_MAP::iterator iter = _module_map.begin();
+    
+    iter = _module_map.begin();
     while(iter != _module_map.end()) {
         iter->second->Launch();
         iter++;

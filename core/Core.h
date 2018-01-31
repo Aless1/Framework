@@ -7,9 +7,9 @@
 #include "INet.h"
 #include "ILogic.h"
 
-using namespace tcore;
-
+namespace tcore {
 class Core : public ICore {
+typedef std::unordered_map<std::string, const char *> PARAM_ARG_MAP;
 public:
     virtual const char * GetParam(const char * name);
     
@@ -20,7 +20,8 @@ public:
     bool Parse(int argc, char * argv[]);
 
 private:
-    std::unordered_map<const char *, const char *> _param_args;
+    PARAM_ARG_MAP _param_args;
 };
+}
 
 #endif // __FRAMEWORK_ICORE__

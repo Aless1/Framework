@@ -10,6 +10,8 @@ bool Test::Init() {
 
 bool Test::Launch() {
     cout << "Test Launch" << endl;
+    tcore::GetCoreInstance()->StartTcpServer("0.0.0.0", 8089, new TestServer());
+    // tcore::GetCoreInstance()
     return true;
 }
 

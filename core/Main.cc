@@ -2,11 +2,17 @@
 using namespace tcore;
 
 int main(int argc, char * argv[]) {
-    GetLogicInstance()->Launch();
-    GetNetInstance()->Launch();
+    ((Core *)GetCoreInstance())->Parse(argc, argv);
+    if(!GetNetInstance()->Launch()) {
 
-    // while(1) {
-    //     GetNetInstance()->Proess(5);
-    // }
+    }
+
+    if(GetLogicInstance()->Launch()) {
+
+    }
+    
+    while(1) {
+        GetNetInstance()->Proess(5);
+    }
     return 0;
 }

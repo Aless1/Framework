@@ -64,7 +64,7 @@ set (THIRD_PARTY_INCLUDE
 )
 
 set (THIRD_PARTY_LIB
-    "${PROJECT_SOURCE_DIR}/third_party/yaml-cpp/libyaml-cpp.0.6.0.dylib"
+    "${PROJECT_SOURCE_DIR}/third_party/yaml-cpp/libyaml-cpp.0.6.dylib"
 )
 
 

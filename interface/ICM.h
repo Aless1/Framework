@@ -19,7 +19,7 @@ public:
     virtual bool Launch() = 0;
     virtual bool Update() {
         return true;
-    };
+    }
     virtual bool Shutdown() = 0;
 };
 }

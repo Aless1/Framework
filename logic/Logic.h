@@ -3,10 +3,13 @@
 
 #include <unordered_map>
 #include "ILogic.h"
+#include "ICore.h"
 
 using namespace tcore;
 
-typedef std::unordered_map<const char *, IModule *> MODULE_MAP;
+typedef std::unordered_map<std::string, IModule *> MODULE_MAP;
+typedef IModule * GetModule(ICore *);
+
 class Logic : public ILogic {
 public:
     virtual bool Launch();

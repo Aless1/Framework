@@ -33,7 +33,7 @@ bool Logic::Launch() {
     MODULE_MAP::iterator iter;
     for (int i = 0; i < config.size(); i++) {
         std::string name;
-        config[0] >> name;
+        config[i] >> name;
 
         char file[32];
         sprintf(file, "lib%s.dylib", name.c_str());
@@ -52,6 +52,7 @@ bool Logic::Launch() {
         while(module) {
             iter = _module_map.find(module->name);
             if(iter != _module_map.end()) {
+                module = module->next;
                 continue;
             }
             _module_map[module->name] = module;
@@ -59,7 +60,7 @@ bool Logic::Launch() {
             module = module->next;
         }
     }
-    
+
     iter = _module_map.begin();
     while(iter != _module_map.end()) {
         iter->second->Launch();

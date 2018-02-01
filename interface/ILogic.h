@@ -1,10 +1,11 @@
 #ifndef __FRAMEWORK_ILOGIC__
 #define __FRAMEWORK_ILOGIC__
 
+#include "ICM.h"
 #include "IModule.h"
 
 namespace tcore {
-class ILogic {
+class ILogic : public ICM {
 public:
     virtual bool Launch() = 0;
     virtual bool Shutdown() = 0;

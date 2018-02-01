@@ -6,6 +6,7 @@
 #include "ICore.h"
 #include "INet.h"
 #include "ILogic.h"
+#include "ILogger.h"
 
 namespace tcore {
 class Core : public ICore {
@@ -18,6 +19,8 @@ public:
 
     virtual IModule * FindModule(const char * name);
 
+    virtual void LogSyn(char * type, char * log,  char * filename, int line);
+    virtual void LogASyn(char * type, char * log,  char * filename, int line);
 public:
     bool Parse(int argc, char * argv[]);
 

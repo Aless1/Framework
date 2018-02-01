@@ -1,7 +1,7 @@
 #ifndef __TOOLS_CIRBUFFER__
 #define __TOOLS_CIRBUFFER__
 
-#include<string.h>
+#include <string.h>
 
 namespace Tools {
 class CirBuffer {

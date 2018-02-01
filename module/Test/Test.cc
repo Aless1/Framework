@@ -38,6 +38,8 @@ bool Test::Launch() {
     cout << "Test Launch" << endl;
     g_event = (IEvent *)GetCoreInstance()->FindModule("Event");
     g_event->Register(1, TestEvent);
+
+    LOGIC_LOG("this is a test log");
     GetCoreInstance()->StartTcpServer("0.0.0.0", 8089, new TestServer());
     return true;
 }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project (Framework)
+project (tcore)
 # set_property(GLOBAL PROPERTY USE_FOLDERS On)
 #version
 set (FRAMEWORK_VERSION_MAJOR 1)
@@ -23,7 +23,10 @@ set (INTERFACE
     ${PROJECT_SOURCE_DIR}/interface/ICM.h
     ${PROJECT_SOURCE_DIR}/interface/ICore.h
     ${PROJECT_SOURCE_DIR}/interface/INet.h
+    ${PROJECT_SOURCE_DIR}/interface/IModule.h
+    ${PROJECT_SOURCE_DIR}/interface/ILogic.h
     ${PROJECT_SOURCE_DIR}/interface/ITcpHeader.h
+    ${PROJECT_SOURCE_DIR}/interface/ILogger.h
 )
 
 set (PUBLIC
@@ -53,6 +56,11 @@ set (LOGIC
     ${PROJECT_SOURCE_DIR}/logic//Logic.cc
 )
 
+set (LOGGER
+    ${PROJECT_SOURCE_DIR}/logger/Logger.h
+    ${PROJECT_SOURCE_DIR}/logger/Logger.cc
+)
+
 INCLUDE_DIRECTORIES(
     "${PROJECT_SOURCE_DIR}/public"
     "${PROJECT_SOURCE_DIR}/interface"
@@ -73,15 +81,17 @@ SOURCE_GROUP(public FILES ${PUBLIC})
 SOURCE_GROUP(core FILES ${CORE})
 SOURCE_GROUP(net FILES ${NET})
 SOURCE_GROUP(logic FILES ${LOGIC})
+SOURCE_GROUP(logger FILES ${LOGGER})
 
-add_executable(Framework
+add_executable(tcore
     ${INTERFACE}
     ${PUBLIC}
     ${NET}
     ${CORE}
     ${LOGIC}
+    ${LOGGER}
 )
 
-target_link_libraries(Framework ${THIRD_PARTY_INCLUDE} ${THIRD_PARTY_LIB})
+target_link_libraries(tcore ${THIRD_PARTY_LIB})
 
 add_subdirectory(module)

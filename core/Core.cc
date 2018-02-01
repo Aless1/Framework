@@ -2,7 +2,6 @@
 
 using namespace tcore;
 
-
 ICore * tcore::GetCoreInstance() {
     static ICore * s_core = new Core();
     return s_core;
@@ -40,4 +39,13 @@ bool Core::StartTcpSession(const char * host, int port, ITcpSession * session) {
 
 IModule * Core::FindModule(const char * name) {
     return GetLogicInstance()->FindModule(name);
+}
+
+void Core::LogSyn(char * type, char * log,  char * filename, int line) {
+    GetLoggerInstance()->LogSyn(type, log, filename, line);
+
+}
+
+void Core::LogASyn(char * type, char * log,  char * filename, int line) {
+    GetLoggerInstance()->LogASyn(type, log, filename, line);
 }

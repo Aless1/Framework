@@ -1,4 +1,4 @@
-bin
+/bin/apple/*
 !/bin/apple/start.sh
 !/bin/apple/stop.sh
 !/bin/apple/node/

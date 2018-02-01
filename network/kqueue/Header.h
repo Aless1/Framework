@@ -94,7 +94,7 @@ static bool SetEventState(int fd, int type, int state, void * udata) {
     EV_SET(&event, fd, type, state, 0, 0, udata);
     int ret = kevent(g_kqueue, &event, 1, NULL, 0, NULL);
     if (ret == -1) {
-        std::cout << "kevent register";
+        std::cout << "kevent register" << errno << std::endl;;
         return false;
     }
     if (event.flags & EV_ERROR) {

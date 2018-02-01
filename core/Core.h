@@ -16,6 +16,8 @@ public:
     virtual bool StartTcpServer(const char * host, int port, ITcpServer * server);
     virtual bool StartTcpSession(const char * host, int port, ITcpSession * session);
 
+    virtual IModule * FindModule(const char * name);
+
 public:
     bool Parse(int argc, char * argv[]);
 

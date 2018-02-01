@@ -12,6 +12,8 @@ public:
     
     virtual bool StartTcpServer(const char * host, int port, ITcpServer * server) = 0;
     virtual bool StartTcpSession(const char * host, int port, ITcpSession * session) = 0;
+
+    virtual IModule * FindModule(const char * name) = 0;
 };
 
 ICore * GetCoreInstance();

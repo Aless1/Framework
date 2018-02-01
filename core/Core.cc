@@ -37,3 +37,7 @@ bool Core::StartTcpServer(const char * host, int port, ITcpServer * server) {
 bool Core::StartTcpSession(const char * host, int port, ITcpSession * session) {
     return GetNetInstance()->StartTcpSession(host, port, session);
 }
+
+IModule * Core::FindModule(const char * name) {
+    return GetLogicInstance()->FindModule(name);
+}

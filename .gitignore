@@ -1,4 +1,7 @@
 bin
+!/bin/apple/start.sh
+!/bin/apple/stop.sh
+!/bin/apple/node/
 build
 *.swp
 sublime

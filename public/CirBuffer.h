@@ -1,9 +1,9 @@
-#ifndef __TOOLS_CIRBUFFER__
-#define __TOOLS_CIRBUFFER__
+#ifndef __LIB_CIRBUFFER__
+#define __LIB_CIRBUFFER__
 
 #include <string.h>
 
-namespace Tools {
+namespace Lib {
 class CirBuffer {
 public:
     CirBuffer(int size) : _size(size), _index_write(0), _index_read(0) {
@@ -68,4 +68,4 @@ private:
 };
 
 }
-#endif // __TOOLS_CIRBUFFER__
+#endif // __LIB_CIRBUFFER__

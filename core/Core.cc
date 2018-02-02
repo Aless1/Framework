@@ -41,11 +41,11 @@ IModule * Core::FindModule(const char * name) {
     return GetLogicInstance()->FindModule(name);
 }
 
-void Core::LogSyn(char * type, char * log,  char * filename, int line) {
-    GetLoggerInstance()->LogSyn(type, log, filename, line);
+void Core::LogSyn(char * path, char * log,  char * filename, int line) {
+    GetLoggerInstance()->LogSyn(path, log, filename, line);
 
 }
 
-void Core::LogASyn(char * type, char * log,  char * filename, int line) {
-    GetLoggerInstance()->LogASyn(type, log, filename, line);
+void Core::LogAsyn(char * path, char * log,  char * filename, int line) {
+    GetLoggerInstance()->LogAsyn(path, log, filename, line);
 }

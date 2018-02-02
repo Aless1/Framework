@@ -1,5 +1,6 @@
 #include "Test.h"
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 using namespace tcore;
@@ -39,7 +40,9 @@ bool Test::Launch() {
     g_event = (IEvent *)GetCoreInstance()->FindModule("Event");
     g_event->Register(1, TestEvent);
 
-    LOGIC_LOG("this is a test log");
+    ERROR_LOG("this is a test log1");
+    sleep(10);
+    ERROR_LOG("this is a test log2");
     GetCoreInstance()->StartTcpServer("0.0.0.0", 8089, new TestServer());
     return true;
 }

@@ -33,6 +33,7 @@ set (PUBLIC
     ${PROJECT_SOURCE_DIR}/public/CirBuffer.h
     ${PROJECT_SOURCE_DIR}/public/TPool.h
     ${PROJECT_SOURCE_DIR}/public/Daily.h
+    ${PROJECT_SOURCE_DIR}/public/Thread.h
 )
 
 set (CORE
@@ -59,6 +60,8 @@ set (LOGIC
 set (LOGGER
     ${PROJECT_SOURCE_DIR}/logger/Logger.h
     ${PROJECT_SOURCE_DIR}/logger/Logger.cc
+    ${PROJECT_SOURCE_DIR}/logger/LogFile.h
+    ${PROJECT_SOURCE_DIR}/logger/LogFile.cc
 )
 
 INCLUDE_DIRECTORIES(

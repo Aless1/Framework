@@ -15,12 +15,12 @@ public:
 
     virtual IModule * FindModule(const char * name) = 0;
 
-    virtual void LogSyn(char * type, char * log,  char * filename, int line) = 0;
-    virtual void LogASyn(char * type, char * log,  char * filename, int line) = 0;
+    virtual void LogSyn(char * path, char * log,  char * filename, int line) = 0;
+    virtual void LogAsyn(char * path, char * log,  char * filename, int line) = 0;
 };
 
 ICore * GetCoreInstance();
 }
 
-#define LOGIC_LOG(log) GetCoreInstance()->LogASyn("error", log, __FILE__, __LINE__);
+#define ERROR_LOG(log) GetCoreInstance()->LogSyn("error", log, __FILE__, __LINE__);
 #endif // __FRAMEWORK_ICORE__

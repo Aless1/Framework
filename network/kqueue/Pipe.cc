@@ -36,8 +36,8 @@ Pipe::Pipe(ITcpSession * session, int socket, int state, int recv_size, int send
     
     session->SetPipe(this);
 
-    recv_buff = new Tools::CirBuffer(recv_size);
-    send_buff = new Tools::CirBuffer(send_size);
+    recv_buff = new Lib::CirBuffer(recv_size);
+    send_buff = new Lib::CirBuffer(send_size);
 }
 
 Pipe::~Pipe() {

@@ -1,10 +1,11 @@
-#ifndef __TOOLS_DAILY__
-#define __TOOLS_DAILY__
+#ifndef __UTIL_DAILY__
+#define __UTIL_DAILY__
 
 #include <sys/time.h>
 #include <stdio.h>
 
-namespace Tools {
+namespace Util {
+namespace Daily {
     static char date[64];
 
     static long long GetCurrentTime() {
@@ -22,5 +23,6 @@ namespace Tools {
         return date;
     }
 }
+}
 
-#endif // __TOOLS_DAILY__
+#endif // __UTIL_DAILY__

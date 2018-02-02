@@ -1,21 +1,42 @@
 #ifndef __FRAMEWORK_LOGGER__
 #define __FRAMEWORK_LOGGER__
 
+#include <unordered_map>
+
 #include "ILogger.h"
+#include "Thread.h"
+
+#include "LogFile.h"
 
 using namespace tcore;
 
-#define ASYN_TEMP_SIZE (1024 * 4)
+#define ASYN_TEMP_QUEUE_SIZE 128
 
-class Logger : public ILogger {
+struct logunit {
+    char * path;
+    char * log;
+    char * filename;
+    int line;
+};
+
+class Logger : public ILogger, public Lib::Thread {
+typedef std::unordered_map<const char *, LogFile *> LOGFILE_MAP;
 public:
+    Logger() : _queue_index_write(0), _queue_index_read(0) {}
     virtual bool Launch();
     virtual bool Shutdown();
 
-    virtual void LogSyn(char * type, char * log,  char * filename, int line);
-    virtual void LogASyn(char * type, char * log,  char * filename, int line);
+    virtual void LogSyn(char * path, char * log,  char * filename, int line);
+    virtual void LogAsyn(char * path, char * log,  char * filename, int line);
+
+    virtual void Run();
+    virtual void Terminate();
 private:
-    char _asyn_log_temp[ASYN_TEMP_SIZE];
+    LOGFILE_MAP _logfile_map;
+
+    logunit _queue[ASYN_TEMP_QUEUE_SIZE];
+    int _queue_index_write;
+    int _queue_index_read;
 };
 
 #endif // __FRAMEWORK_LOGGER__

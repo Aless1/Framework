@@ -24,8 +24,8 @@ public:
     int sock;
 
     struct Associat associat;
-    Tools::CirBuffer * recv_buff;
-    Tools::CirBuffer * send_buff;
+    Lib::CirBuffer * recv_buff;
+    Lib::CirBuffer * send_buff;
 };
 
 #endif // __KQEUEUE_PIPE__

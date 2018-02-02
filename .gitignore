@@ -2,6 +2,8 @@
 !/bin/apple/start.sh
 !/bin/apple/stop.sh
 !/bin/apple/node/
+/bin/apple/log/*
+!/bin/apple/log/
 build
 *.swp
 sublime

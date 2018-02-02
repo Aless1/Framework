@@ -9,8 +9,8 @@ class ICM {
 public:
     bool Proess(int sec) {
         int res = true;
-        long long tick = Tools::GetCurrentTime();
-        while(res && Tools::GetCurrentTime() - tick < sec) {
+        long long tick = Util::Daily::GetCurrentTime();
+        while(res && Util::Daily::GetCurrentTime() - tick < sec) {
             res &= Update();
         }
         return res;

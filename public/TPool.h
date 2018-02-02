@@ -1,7 +1,7 @@
-#ifndef __TOOLS_TPOOL__
-#define __TOOLS_TPOOL__
+#ifndef __LIB_TPOOL__
+#define __LIB_TPOOL__
 
-namespace Tools {
+namespace Lib {
 template <typename T, int chunks_count = 1, int chunks_size = 64>
 class TPool {
 
@@ -128,4 +128,4 @@ private:
 
 #define CREATE_FROM_POOL(pool, ...) pool.Create(__AV_ARGS__)
 
-#endif // __TOOL_TPOOL_`_
+#endif // __LIB_TPOOL__`_

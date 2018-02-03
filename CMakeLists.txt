@@ -17,7 +17,7 @@ set (EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
 set (LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
 set (BUILD_SHARED_LIBS On)
 
-SET(CMAKE_CXX_FLAGS "-g -std=c++11")
+SET(CMAKE_CXX_FLAGS "-g -std=c++11 -lcurl")
 
 set (INTERFACE
     ${PROJECT_SOURCE_DIR}/interface/ICM.h
@@ -27,6 +27,8 @@ set (INTERFACE
     ${PROJECT_SOURCE_DIR}/interface/ILogic.h
     ${PROJECT_SOURCE_DIR}/interface/ITcpHeader.h
     ${PROJECT_SOURCE_DIR}/interface/ILogger.h
+    ${PROJECT_SOURCE_DIR}/interface/IHttp.h
+    ${PROJECT_SOURCE_DIR}/interface/IHttpHeader.h
 )
 
 set (PUBLIC
@@ -34,6 +36,8 @@ set (PUBLIC
     ${PROJECT_SOURCE_DIR}/public/TPool.h
     ${PROJECT_SOURCE_DIR}/public/Daily.h
     ${PROJECT_SOURCE_DIR}/public/Thread.h
+    ${PROJECT_SOURCE_DIR}/public/Thread.cc
+    ${PROJECT_SOURCE_DIR}/public/TQueue.h
 )
 
 set (CORE
@@ -64,6 +68,13 @@ set (LOGGER
     ${PROJECT_SOURCE_DIR}/logger/LogFile.cc
 )
 
+set (HTTP
+    ${PROJECT_SOURCE_DIR}/http//Http.h
+    ${PROJECT_SOURCE_DIR}/http//Http.cc
+    ${PROJECT_SOURCE_DIR}/http//HttpRequest.h
+    ${PROJECT_SOURCE_DIR}/http//HttpRequest.cc
+)
+
 INCLUDE_DIRECTORIES(
     "${PROJECT_SOURCE_DIR}/public"
     "${PROJECT_SOURCE_DIR}/interface"
@@ -85,6 +96,7 @@ SOURCE_GROUP(core FILES ${CORE})
 SOURCE_GROUP(net FILES ${NET})
 SOURCE_GROUP(logic FILES ${LOGIC})
 SOURCE_GROUP(logger FILES ${LOGGER})
+SOURCE_GROUP(http FILES ${HTTP})
 
 add_executable(tcore
     ${INTERFACE}
@@ -93,6 +105,7 @@ add_executable(tcore
     ${CORE}
     ${LOGIC}
     ${LOGGER}
+    ${HTTP}
 )
 
 target_link_libraries(tcore ${THIRD_PARTY_LIB})

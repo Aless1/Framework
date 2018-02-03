@@ -11,7 +11,7 @@ ILogger * tcore::GetLoggerInstance() {
 
 bool Logger::Launch() {
     mkdir("log", S_IRWXU | S_IRWXG | S_IRWXO);
-    Start();
+    Start(1);
     return true;
 }
 

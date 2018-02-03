@@ -1,12 +1,13 @@
 #include "Core.h"
 using namespace tcore;
+#include <string>
 
 int main(int argc, char * argv[]) {
     ((Core *)GetCoreInstance())->Parse(argc, argv);
     if(GetLoggerInstance()->Launch()) {
 
     }
-    
+
     if(!GetNetInstance()->Launch()) {
 
     }

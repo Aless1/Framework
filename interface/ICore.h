@@ -3,6 +3,7 @@
 
 #include "IModule.h"
 #include "ITcpHeader.h"
+#include "IHttpHeader.h"
 
 namespace tcore {
 

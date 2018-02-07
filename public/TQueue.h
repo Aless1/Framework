@@ -31,7 +31,7 @@ public:
             return false;
         }
         _queue[_index_back] = t;
-        _index_back = _index_back;
+        _index_back = next_index;
         return true;
     }
 private:
@@ -41,4 +41,4 @@ private:
 };
 }
 
-#endif // __LIB_TQUEUE__`_
+#endif // __LIB_TQUEUE__

@@ -37,5 +37,5 @@ void Http::Run() {
         // IHttpResponse * response = IHttpResponse::Create();
         // _queue_response.Push(response);
     }
-    _status = THREAD_STOPED;
+    _thread_count--;
 }

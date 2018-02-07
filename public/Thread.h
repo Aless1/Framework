@@ -26,6 +26,7 @@ public:
 
 protected:
     ThradStatus _status;
+    int _thread_count;
 };
 }
 

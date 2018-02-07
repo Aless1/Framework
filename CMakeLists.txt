@@ -17,7 +17,7 @@ set (EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
 set (LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
 set (BUILD_SHARED_LIBS On)
 
-SET(CMAKE_CXX_FLAGS "-g -std=c++11 -lcurl")
+SET(CMAKE_CXX_FLAGS "-g -std=c++11")
 
 set (INTERFACE
     ${PROJECT_SOURCE_DIR}/interface/ICM.h
@@ -38,6 +38,11 @@ set (PUBLIC
     ${PROJECT_SOURCE_DIR}/public/Thread.h
     ${PROJECT_SOURCE_DIR}/public/Thread.cc
     ${PROJECT_SOURCE_DIR}/public/TQueue.h
+    ${PROJECT_SOURCE_DIR}/public/MultSys.h
+    ${PROJECT_SOURCE_DIR}/public/MultSys.cc
+    ${PROJECT_SOURCE_DIR}/public/Unix.h
+    ${PROJECT_SOURCE_DIR}/public/Tools.h
+    ${PROJECT_SOURCE_DIR}/public/ToolsUnix.cc
 )
 
 set (CORE

@@ -2,6 +2,7 @@
 #define __FRAMEWORK_LOGGER__
 
 #include <unordered_map>
+#include <string>
 
 #include "ILogger.h"
 #include "Thread.h"
@@ -9,14 +10,13 @@
 #include "LogFile.h"
 
 using namespace tcore;
+using namespace std;
 
 #define ASYN_TEMP_QUEUE_SIZE 128
 
 struct logunit {
-    char * path;
-    char * log;
-    char * filename;
-    int line;
+    long long tick;
+    string log;
 };
 
 class Logger : public ILogger, public Lib::Thread {
@@ -30,7 +30,6 @@ public:
     virtual void LogAsyn(char * path, char * log,  char * filename, int line);
 
     virtual void Run();
-    virtual void Terminate();
 private:
     LOGFILE_MAP _logfile_map;
 

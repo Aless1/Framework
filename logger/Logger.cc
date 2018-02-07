@@ -4,13 +4,15 @@
 #include "Logger.h"
 #include "LogFile.h"
 
+#include "Tools.h"
+
 ILogger * tcore::GetLoggerInstance() {
     static ILogger * s_logger = new Logger();
     return s_logger;
 }
 
 bool Logger::Launch() {
-    mkdir("log", S_IRWXU | S_IRWXG | S_IRWXO);
+    tools::file::MakeDir("log");
     Start(1);
     return true;
 }
@@ -60,8 +62,4 @@ void Logger::Run() {
 
         iter->second->Flush();
     }
-}
-
-void Logger::Terminate() {
-
 }

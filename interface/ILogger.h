@@ -9,7 +9,7 @@ public:
     virtual bool Launch() = 0;
     virtual bool Shutdown() = 0;
 
-    virtual void LogSyn(char * path, char * log,  char * filename, int line) = 0;
+    virtual void LogSyn(long long tick, const char * log) = 0;
     virtual void LogAsyn(char * path, char * log,  char * filename, int line) = 0;
 
     virtual ~ILogger() {}

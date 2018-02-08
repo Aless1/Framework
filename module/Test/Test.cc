@@ -7,7 +7,7 @@ using namespace tcore;
 
 IEvent * g_event = NULL;
 
-class TestSession : public tcore::ITcpSession {
+class TestSession : public ITcpSession {
 public:
     virtual int OnRecv(void * data, int len) {
         std::cout<< "OnRecv" << std::endl;
@@ -23,26 +23,37 @@ public:
     }
 };
 
-class TestServer : public tcore::ITcpServer {
+class TestServer : public ITcpServer {
 public:
     virtual tcore::ITcpSession * OnMallocSession() {
         return new TestSession();
     }
 };
 
+class TestResponse : public IHttpResponse {
+public:
+    virtual void OnResponse(int rid, void * context, int len, void * udata) {
+        printf("rid:%d context:%s len:%d udata:%d\n", rid, context, len, udata);
+    }
+    virtual void OnError(int rid, void * udata) {
+        printf("Response OnError");
+    }
+};
+
 bool Test::Init() {
-    cout << "Test Init" << endl;
     return true;
 }
 
 bool Test::Launch() {
-    cout << "Test Launch" << endl;
-    g_event = (IEvent *)GetCoreInstance()->FindModule("Event");
-    g_event->Register(1, TestEvent);
+    // http
+    IHttpRequest * requset = GetCoreInstance()->CreateHttpRequest(1, "http://www.baidu.com", new TestResponse(), (void *)1);
+    GetCoreInstance()->DoRequest(requset);
 
-    ERROR_LOG("this is a test log1");
-    sleep(10);
-    ERROR_LOG("this is a test log2");
+    // log
+    ERROR_LOG("this is a error log");
+    INFO_LOG("this is a info log");
+
+    // tcp
     GetCoreInstance()->StartTcpServer("0.0.0.0", 8089, new TestServer());
     return true;
 }

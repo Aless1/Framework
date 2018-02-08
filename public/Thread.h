@@ -22,7 +22,7 @@ public:
     virtual void Run() = 0;
     virtual void Terminate();
 
-    void Start(int thread_count);
+    bool Start(int thread_count);
 
 protected:
     ThradStatus _status;

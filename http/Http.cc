@@ -19,23 +19,54 @@ bool Http::Shutdown() {
     return true;
 }
 
+bool Http::Update() {
+    HttpRequest * response;
+    if(!(response = _queue_response.Pull(false))) {
+        CSLEEP(5);
+        return true;
+    }
+    response->DoResponse();
+    return true;
+}
+
 IHttpRequest * Http::CreateHttpRequest(int reqid, const char * url, IHttpResponse * response, void * udata) {
-    IHttpRequest * req = HttpRequest::Create(url);
-    return req;
+    return HttpRequest::Create(reqid, url, response, udata);
 }
 
 bool Http::DoRequest(IHttpRequest * req) {
-    return _queue_request.Push(req);
+    return _queue_request.Push((HttpRequest *)req);
+}
+
+int Http::HttpResponseWrite(char * ptr, int size, int nmemb, void * udata) {
+    tools::SafeMemcpy(udata, 10240, ptr, size * nmemb);
+    return 0;
 }
 
 void Http::Run() {
-    IHttpRequest * request;
+    CURL * handle = curl_easy_init();
+    HttpRequest * request;
     while(_status != THREAD_STOPING) {
         if(!(request = _queue_request.Pull(false))) {
-            sleep(1);
+            CSLEEP(50);
+            continue;
         }
-        // IHttpResponse * response = IHttpResponse::Create();
-        // _queue_response.Push(response);
+        curl_easy_reset(handle);
+        curl_easy_setopt(handle, CURLOPT_TIMEOUT, 10);
+        curl_easy_setopt(handle, CURLOPT_VERBOSE, 0L);
+        curl_easy_setopt(handle, CURLOPT_URL, request->GetUrl());
+        curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1);
+        curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, HttpResponseWrite);
+        curl_easy_setopt(handle, CURLOPT_WRITEDATA, (void *)request->GetHttpDataCache());
+
+        curl_easy_setopt(handle, CURLOPT_POST, 1);
+        // curl_easy_setopt(handle, CURLOPT_POSTFIELDS, request->GetParams());
+        int code = curl_easy_perform(handle);
+        if (code != CURLE_OK) {
+            request->SetError();
+        }
+        
+        _queue_response.Push(request);
+        curl_easy_cleanup(handle);
     }
     _thread_count--;
 }

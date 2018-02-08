@@ -46,8 +46,11 @@ void Logger::LogAsyn(const char * log) {
 }
 
 void Logger::Run() {
-    while(_queue_index_read != _queue_index_write) {
-
+    while(_status != Lib::THREAD_STOPING) {
+        if(_queue_index_read == _queue_index_write) {
+            CSLEEP(50);
+            continue;
+        }
         LOGFILE_MAP::iterator iter = _logfile_map.find("asynlog");
         if(iter == _logfile_map.end()) {
             iter = _logfile_map.insert(std::pair<const char *, LogFile *>("asynlog", new LogFile("asynlog"))).first;
@@ -57,5 +60,7 @@ void Logger::Run() {
         iter->second->Write(_queue[_queue_index_read].log);
         iter->second->Write("\n");
         iter->second->Flush();
+
+        _queue_index_read = (_queue_index_read + 1) % ASYN_TEMP_QUEUE_SIZE;
     }
 }

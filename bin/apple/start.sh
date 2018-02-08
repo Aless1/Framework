@@ -1,3 +1,2 @@
 #!/bin/bash
-./tcore node=master &
-echo start server success!!!
+./tcore node=master

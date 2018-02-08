@@ -1,7 +1,7 @@
 #ifndef __LIB_TQUEUE__
 #define __LIB_TQUEUE__
 
-#include <unistd.h>
+#include "MultSys.h"
 
 namespace Lib {
 template <typename T, int size = 128>
@@ -13,21 +13,26 @@ public:
         if(block) {
             while (true) {
                 if(_index_front == _index_back) {
-                    sleep(1); // TODO
+                    CSLEEP(50); // TODO
                 }
-                return _queue[_index_front++];
+                int index_front_old = _index_front;
+                _index_front = (_index_front + 1) % size;
+                return _queue[index_front_old];
             }
         } else {
             if(_index_front == _index_back) {
                 return NULL;
             }
-            return _queue[_index_front++];
+            int index_front_old = _index_front;
+            _index_front = (_index_front + 1) % size;
+            return _queue[index_front_old];
         }
     }
 
     bool Push(T * t) {
         int next_index = (_index_back + 1) % size;
         if(_index_front == next_index) {
+            tassert(false, "queue overflow");
             return false;
         }
         _queue[_index_back] = t;

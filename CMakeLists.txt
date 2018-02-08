@@ -17,7 +17,7 @@ set (EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
 set (LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin/apple/")
 set (BUILD_SHARED_LIBS On)
 
-SET(CMAKE_CXX_FLAGS "-g -std=c++11")
+SET(CMAKE_CXX_FLAGS "-g -std=c++11 -lcurl -lpthread")
 
 set (INTERFACE
     ${PROJECT_SOURCE_DIR}/interface/ICM.h

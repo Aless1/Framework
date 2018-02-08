@@ -8,6 +8,10 @@ int main(int argc, char * argv[]) {
 
     }
 
+    if(!GetHttpInstance()->Launch()) {
+
+    }
+
     if(!GetNetInstance()->Launch()) {
 
     }
@@ -18,6 +22,7 @@ int main(int argc, char * argv[]) {
     
     while(1) {
         GetNetInstance()->Proess(5);
+        GetHttpInstance()->Proess(5);
     }
     return 0;
 }

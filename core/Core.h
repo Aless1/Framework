@@ -7,6 +7,7 @@
 #include "INet.h"
 #include "ILogic.h"
 #include "ILogger.h"
+#include "IHttp.h"
 
 namespace tcore {
 class Core : public ICore {
@@ -21,6 +22,9 @@ public:
 
     virtual void LogSyn(const char * log);
     virtual void LogAsyn(const char * log);
+
+    virtual IHttpRequest * CreateHttpRequest(int reqid, const char * url, IHttpResponse * response, void * udata);
+    virtual bool DoRequest(IHttpRequest * req);
 public:
     bool Parse(int argc, char * argv[]);
 

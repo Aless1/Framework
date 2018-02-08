@@ -11,7 +11,7 @@ static void * ThreadFunc(void * param) {
 
 void Thread::Terminate() {
     if(THREAD_STARTING == _status) {
-
+        tassert(false, "wtf");
     }
 
     if(THREAD_STARTED == _status) {
@@ -22,7 +22,7 @@ void Thread::Terminate() {
     }
 }
 
-void Thread::Start(int thread_count) {
+bool Thread::Start(int thread_count) {
     _thread_count = thread_count;
     int err;
     pthread_t pid;
@@ -30,7 +30,8 @@ void Thread::Start(int thread_count) {
     for (int i = 0; i < thread_count; i++) {
         err = pthread_create(&pid, NULL, ThreadFunc, this);
         if (err != 0) {
-            // TODO
+            return false;
         }
     }
+    return true;
 }

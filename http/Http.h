@@ -4,8 +4,9 @@
 #include "IHttp.h"
 #include "TQueue.h"
 #include "Thread.h"
+#include "HttpRequest.h"
 
-#define HTTP_THREAD_COUNT 4
+#define HTTP_THREAD_COUNT 1
 
 #define QUEUE_REQUEST_COUNT 128
 #define QUEUE_RESPONSE_COUNT 128
@@ -18,6 +19,7 @@ public:
     virtual ~Http() {}
 
     virtual bool Launch();
+    virtual bool Update();
     virtual bool Shutdown();
 
     virtual IHttpRequest * CreateHttpRequest(int reqid, const char * url, IHttpResponse * response, void * udata);
@@ -25,9 +27,11 @@ public:
 
     virtual void Run();
 
+    static int HttpResponseWrite(char * ptr, int size, int nmemb, void * udata);
+
 private:
-    TQueue<IHttpRequest> _queue_request;
-    TQueue<IHttpRequest> _queue_response;
+    TQueue<HttpRequest> _queue_request;
+    TQueue<HttpRequest> _queue_response;
 };
 
 #endif // __FRAMEWORK_HTTP__

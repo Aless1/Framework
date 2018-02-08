@@ -5,6 +5,9 @@ namespace tcore {
 class IHttpRequest {
 public:
     virtual ~IHttpRequest() {}
+    virtual const char * GetUrl() = 0;
+    virtual const char * GetParams() = 0;
+
     virtual void SetParam(const char * key, const char * value) = 0;
     virtual void Post() = 0;
 };

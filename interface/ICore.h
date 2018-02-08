@@ -21,10 +21,8 @@ public:
     virtual void LogSyn(const char * log) = 0;
     virtual void LogAsyn(const char * log) = 0;
 
-    template<typename... Args>
-    void LogAsyn(const char * format, Args ...args) {
-
-    }
+    virtual IHttpRequest * CreateHttpRequest(int reqid, const char * url, IHttpResponse * response, void * udata = 0) = 0;
+    virtual bool DoRequest(IHttpRequest * req) = 0;
 };
 
 ICore * GetCoreInstance();
@@ -32,12 +30,12 @@ ICore * GetCoreInstance();
 
 #define ERROR_LOG(format, ...) \
 { char log[4096]; \
-SafeSprintf(log, 4096, "[error] %s:%d:%s : "#format,  __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__); \
+SafeSprintf(log, 4096, " [error] %s:%d:%s : "#format,  __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__); \
 GetCoreInstance()->LogSyn(log); }
 
 #define INFO_LOG(format, ...) \
 { char log[4096]; \
-tools::SafeSprintf(log, 4096, "[info]  %s:%d:%s : "#format,  __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__); \
+SafeSprintf(log, 4096, " [info]  %s:%d:%s : "#format,  __FILE__, __LINE__, __FUNCTION__, ##__VA_ARGS__); \
 GetCoreInstance()->LogAsyn(log); }
 
 #endif // __CORE_ICORE__

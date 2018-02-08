@@ -28,6 +28,7 @@ FILE * LogFile::GetStream() {
 }
 
 void LogFile::Write(const char * str) {
+    printf(str);
     fwrite(str, strlen(str), 1, GetStream());
 }
 

@@ -49,3 +49,12 @@ void Core::LogSyn(const char * log) {
 void Core::LogAsyn(const char * log) {
     GetLoggerInstance()->LogAsyn(log);
 }
+
+
+IHttpRequest * Core::CreateHttpRequest(int reqid, const char * url, IHttpResponse * response, void * udata = 0) {
+    return GetHttpInstance()->CreateHttpRequest(reqid, url, response, udata);
+}
+
+bool Core::DoRequest(IHttpRequest * req) {
+    return GetHttpInstance()->DoRequest(req);
+}

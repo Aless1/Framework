@@ -16,7 +16,7 @@ using namespace std;
 
 struct logunit {
     long long tick;
-    string log;
+    char log[LOG_TEMP_SIZE_MAX];
 };
 
 class Logger : public ILogger, public Lib::Thread {
@@ -26,8 +26,8 @@ public:
     virtual bool Launch();
     virtual bool Shutdown();
 
-    virtual void LogSyn(char * path, char * log,  char * filename, int line);
-    virtual void LogAsyn(char * path, char * log,  char * filename, int line);
+    virtual void LogSyn(const char * log);
+    virtual void LogAsyn(const char * log);
 
     virtual void Run();
 private:

@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "Daily.h"
+#include "Tools.h"
 
 LogFile::LogFile(const char * path) : 
 _path(path), _tick(Util::Daily::GetCurrentTime()), _cut_time(LOG_CUT_TIME_SED), _file(NULL) {}
@@ -19,7 +20,7 @@ FILE * LogFile::GetStream() {
 
     if(!_file) {
         char path[128];
-        sprintf(path, "log/%s-%lld.log", _path, _tick);
+        SafeSprintf(path, 128, "log/%s-%s.log", _path, Util::Daily::GetTimeString(_tick));
         _file = fopen(path, "a+");
     }
 
@@ -27,7 +28,7 @@ FILE * LogFile::GetStream() {
 }
 
 void LogFile::Write(const char * str) {
-    fwrite(str, strlen(str) + 1, 1, GetStream());
+    fwrite(str, strlen(str), 1, GetStream());
 }
 
 void LogFile::Flush() {

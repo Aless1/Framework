@@ -1,6 +1,7 @@
 #ifndef __TOOLS_H__
 #define __TOOLS_H__
 
+#include "MultSys.h"
 #include <string>
 
 using namespace std;

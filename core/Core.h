@@ -19,8 +19,8 @@ public:
 
     virtual IModule * FindModule(const char * name);
 
-    virtual void LogSyn(char * path, char * log,  char * filename, int line);
-    virtual void LogAsyn(char * path, char * log,  char * filename, int line);
+    virtual void LogSyn(const char * log);
+    virtual void LogAsyn(const char * log);
 public:
     bool Parse(int argc, char * argv[]);
 

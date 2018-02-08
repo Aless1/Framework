@@ -22,44 +22,40 @@ bool Logger::Shutdown() {
     return true;
 }
 
-void Logger::LogSyn(char * path, char * log, char * filename, int line) {
-    LOGFILE_MAP::iterator iter = _logfile_map.find(path);
+void Logger::LogSyn(const char * log) {
+    LOGFILE_MAP::iterator iter = _logfile_map.find("synlog");
     if(iter == _logfile_map.end()) {
-        iter = _logfile_map.insert(std::pair<const char *, LogFile *>(path, new LogFile(path))).first;
+        iter = _logfile_map.insert(std::pair<const char *, LogFile *>("synlog", new LogFile("synlog"))).first;
     }
-    
-    iter->second->WriteFormat("[%s]: {%s: %d} - %s\n", Util::Daily::GetTimeString(), filename, line, log);
+
+    iter->second->Write(Util::Daily::GetCurrentTimeString());
+    iter->second->Write(log);
+    iter->second->Write("\n");
     iter->second->Flush();
 }
 
-void Logger::LogAsyn(char * path, char * log, char * filename, int line) {
+void Logger::LogAsyn(const char * log) {
     if((_queue_index_write + 1) % ASYN_TEMP_QUEUE_SIZE ==  _queue_index_read) {
         return;
     }
-    _queue[_queue_index_write].path = path;
-    _queue[_queue_index_write].log = log;
-    _queue[_queue_index_write].filename = filename;
-    _queue[_queue_index_write].line = line;
+
+    tools::SafeMemcpy(_queue[_queue_index_write].log, LOG_TEMP_SIZE_MAX, log, strlen(log) + 1);
+
+    _queue[_queue_index_write].tick = Util::Daily::GetCurrentTime();
     _queue_index_write = (_queue_index_write + 1) % ASYN_TEMP_QUEUE_SIZE;
 }
 
 void Logger::Run() {
     while(_queue_index_read != _queue_index_write) {
 
-        LOGFILE_MAP::iterator iter = _logfile_map.find(_queue[_queue_index_read].path);
+        LOGFILE_MAP::iterator iter = _logfile_map.find("asynlog");
         if(iter == _logfile_map.end()) {
-            iter = _logfile_map.insert(
-                std::pair<const char *, LogFile *>(
-                    _queue[_queue_index_read].path, 
-                    new LogFile(_queue[_queue_index_read].path))
-                ).first;
+            iter = _logfile_map.insert(std::pair<const char *, LogFile *>("asynlog", new LogFile("asynlog"))).first;
         }
         
-        iter->second->WriteFormat("[%s]: {%s: %d} - %s\n", 
-            Util::Daily::GetTimeString(), _queue[_queue_index_read].filename,
-             _queue[_queue_index_read].line,
-              _queue[_queue_index_read].log);
-
+        iter->second->Write(Util::Daily::GetTimeString(_queue[_queue_index_read].tick));
+        iter->second->Write(_queue[_queue_index_read].log);
+        iter->second->Write("\n");
         iter->second->Flush();
     }
 }

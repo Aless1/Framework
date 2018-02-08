@@ -9,13 +9,15 @@ public:
     virtual bool Launch() = 0;
     virtual bool Shutdown() = 0;
 
-    virtual void LogSyn(long long tick, const char * log) = 0;
-    virtual void LogAsyn(char * path, char * log,  char * filename, int line) = 0;
+    virtual void LogSyn(const char * log) = 0;
+    virtual void LogAsyn(const char * log) = 0;
 
     virtual ~ILogger() {}
 };
 
 ILogger * GetLoggerInstance();
 }
+
+#define LOG_TEMP_SIZE_MAX 4096
 
 #endif // __FRAMEWORK_ILOGGER__
